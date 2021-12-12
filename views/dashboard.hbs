@@ -1,3 +1,32 @@
 <h6>Dashboard</h6>
 <h3>Welcome {{name}}</h3>
-<p>Here are yout stories</p>
+<p>Here are your stories</p>
+
+{{! If there are stories loop and display each }}
+{{#if stories}}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each stories}}
+        <tr>
+          <td><a href="/story/{{_id}}">{{title}}</a></td>
+          <td>{{createdAt}}</td>
+          <td><span class="dash-status">{{status}}</span></td>
+          <td>
+            <a href="/story/{{_id}}/edit">Edit</a>
+            <a href="/story/{{_id}}/delete">Delete</a>
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p>You have no stories</p>
+{{/if}}
