@@ -41,7 +41,6 @@ app.use(
   })
 );
 
-
 // Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
@@ -52,6 +51,7 @@ app.use(express.static(`${__dirname}/public`));
 // Routes
 app.use("/", require("./routes/index"));
 app.use("/auth", require("./routes/auth"));
+app.use("/stories", require("./routes/stories"));
 
 const PORT = process.env.PORT || 5000;
 
