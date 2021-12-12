@@ -23,6 +23,27 @@ router.post("/", ensureAuth, async (req, res) => {
   }
 });
 
+// @desc Show single story page
+// @route GET /stories/:id
+router.get("/:id", ensureAuth, async (req, res) => {
+  try {
+    const story = await Story.findOne({
+      _id: req.params.id,
+    })
+      .populate("user")
+      .lean();
+    if (!story) {
+      return res.render("error/404");
+    }
+    res.render("stories/show", {
+      story,
+    });
+  } catch (err) {
+    console.error(err);
+    res.render("error/500");
+  }
+});
+
 // @desc Show all public stories page
 // @route GET /stories
 router.get("/", ensureAuth, async (req, res) => {
@@ -104,6 +125,8 @@ router.delete("/:id", ensureAuth, async (req, res) => {
     res.render("error/500");
   }
 });
+
+module.exports = router;
 
 module.exports = router;
 
