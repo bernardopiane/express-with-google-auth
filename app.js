@@ -1,10 +1,13 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const monrgan = require("morgan");
 const exphbs = require("express-handlebars");
-const connectDB = require("./config/db");
 const passport = require("passport");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
+
+const connectDB = require("./config/db");
 
 // Load config
 dotenv.config({ path: "./config/config.env" });
@@ -26,7 +29,18 @@ app.engine(".hbs", exphbs.engine({ extname: ".hbs", defaultLayout: "main" }));
 app.set("view engine", ".hbs");
 
 // Express Sessions Middleware
-app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongooseConnection: mongoose.connection,
+      mongoUrl: process.env.MONGO_URI,
+    }),
+  })
+);
+
 
 // Passport middleware
 app.use(passport.initialize());
