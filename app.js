@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 // Handlebars Helpers
-const { formatDate, truncate, stripTags, editIcon } = require("./helpers/hbs");
+const { formatDate, truncate, stripTags, editIcon, select } = require("./helpers/hbs");
 
 // Handlebars Middleware using .hbs extension
 app.engine(
@@ -37,7 +37,7 @@ app.engine(
   exphbs.engine({
     extname: ".hbs",
     defaultLayout: "main",
-    helpers: { formatDate, truncate, stripTags, editIcon },
+    helpers: { formatDate, truncate, stripTags, editIcon, select },
   })
 );
 app.set("view engine", ".hbs");

@@ -46,7 +46,9 @@ router.get("/edit/:id", ensureAuth, async (req, res) => {
   try {
     const story = await Story.findOne({
       _id: req.params.id,
+      user: req.user.id,
     }).lean();
+    
     if (!story) {
       return res.render("error/404");
     }
