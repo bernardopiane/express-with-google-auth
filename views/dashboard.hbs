@@ -17,11 +17,20 @@
       {{#each stories}}
         <tr>
           <td><a href="/story/{{_id}}">{{title}}</a></td>
-          <td>{{formatDate createdAt 'DD MMMM YYYY, h:mm:ss a'}}</td>
+          <td>{{formatDate createdAt "DD MMMM YYYY, h:mm:ss a"}}</td>
           <td><span class="dash-status">{{status}}</span></td>
           <td>
-            <a href="/story/{{_id}}/edit">Edit</a>
-            <a href="/story/{{_id}}/delete">Delete</a>
+            <a href="/stories/edit/{{_id}}" class="btn btn-float">
+              <i class="fas fa-edit">
+              </i>
+            </a>
+            <form action="/stories/{{_id}}" method="post" id="delete-form">
+              <input type="hidden" name="_method" value="DELETE" />
+              <button type="submit" class="btn red">
+                <i class="fas fa-trash">
+                </i>
+              </button>
+            </form>
           </td>
         </tr>
       {{/each}}
