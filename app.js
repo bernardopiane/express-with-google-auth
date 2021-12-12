@@ -20,12 +20,19 @@ connectDB();
 
 const app = express();
 
+// Body parser
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
 if (process.env.NODE_ENV === "development") {
   app.use(monrgan("dev"));
 }
 
+// Handlebars Helpers
+const { formatDate } = require("./helpers/hbs");
+
 // Handlebars Middleware using .hbs extension
-app.engine(".hbs", exphbs.engine({ extname: ".hbs", defaultLayout: "main" }));
+app.engine(".hbs", exphbs.engine({ extname: ".hbs", defaultLayout: "main", helpers: { formatDate } }));
 app.set("view engine", ".hbs");
 
 // Express Sessions Middleware
